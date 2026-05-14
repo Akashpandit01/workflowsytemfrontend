@@ -1,0 +1,287 @@
+/* =========================
+   GLOBAL
+========================= */
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  font-family: 'Poppins', sans-serif;
+  background: #0f172a;
+  color: white;
+  min-height: 100vh;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+  width: 8px;
+}
+
+::-webkit-scrollbar-track{
+  background: #111827;
+}
+
+::-webkit-scrollbar-thumb{
+  background: #6366f1;
+  border-radius: 20px;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar{
+  background: rgba(15, 23, 42, 0.9) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.navbar-brand{
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white !important;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card{
+  background: rgba(255,255,255,0.06) !important;
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px !important;
+  color: white !important;
+  transition: 0.3s ease;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.3);
+}
+
+.card:hover{
+  transform: translateY(-5px);
+  box-shadow:
+    0 12px 40px rgba(99,102,241,0.3);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+  border-radius: 12px !important;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.btn-primary{
+  background: linear-gradient(
+    45deg,
+    #6366f1,
+    #8b5cf6
+  ) !important;
+  border: none !important;
+}
+
+.btn-primary:hover{
+  transform: scale(1.03);
+}
+
+.btn-success{
+  background: linear-gradient(
+    45deg,
+    #10b981,
+    #059669
+  ) !important;
+  border: none !important;
+}
+
+.btn-danger{
+  background: linear-gradient(
+    45deg,
+    #ef4444,
+    #dc2626
+  ) !important;
+  border: none !important;
+}
+
+.btn-warning{
+  background: linear-gradient(
+    45deg,
+    #f59e0b,
+    #d97706
+  ) !important;
+  border: none !important;
+  color: white !important;
+}
+
+.btn-dark{
+  background: linear-gradient(
+    45deg,
+    #1e293b,
+    #334155
+  ) !important;
+  border: none !important;
+}
+
+.btn-info{
+  background: linear-gradient(
+    45deg,
+    #06b6d4,
+    #0891b2
+  ) !important;
+  border: none !important;
+  color: white !important;
+}
+
+.btn-secondary{
+  background: linear-gradient(
+    45deg,
+    #64748b,
+    #475569
+  ) !important;
+  border: none !important;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+.form-control{
+  background: rgba(255,255,255,0.08) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  color: white !important;
+  border-radius: 12px !important;
+  padding: 12px !important;
+}
+
+.form-control:focus{
+  box-shadow:
+    0 0 0 0.2rem rgba(99,102,241,0.3) !important;
+
+  border-color: #6366f1 !important;
+}
+
+.form-control::placeholder{
+  color: #cbd5e1 !important;
+}
+
+/* =========================
+   HEADINGS
+========================= */
+
+h1,h2,h3,h4,h5{
+  font-weight: 700;
+}
+
+/* =========================
+   ALERTS
+========================= */
+
+.alert{
+  border-radius: 14px;
+  border: none;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal-content{
+  background: #1e293b !important;
+  color: white !important;
+  border-radius: 20px !important;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* =========================
+   LIST GROUP
+========================= */
+
+li{
+  margin-bottom: 10px;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero-title{
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1.2;
+
+  background: linear-gradient(
+    to right,
+    #60a5fa,
+    #a78bfa
+  );
+
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.hero-text{
+  color: #cbd5e1;
+  font-size: 1.2rem;
+}
+
+/* =========================
+   BADGES
+========================= */
+
+.badge{
+  padding: 8px 12px;
+  border-radius: 30px;
+  font-size: 0.8rem;
+}
+
+/* =========================
+   ANIMATION
+========================= */
+
+.fade-in{
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn{
+
+  from{
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:768px){
+
+  .hero-title{
+    font-size: 2.5rem;
+  }
+
+  .card{
+    margin-bottom: 20px;
+  }
+}
