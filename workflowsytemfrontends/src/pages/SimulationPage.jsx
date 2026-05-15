@@ -11,6 +11,9 @@ import api from "../services/api"
 import Navbar
   from "../components/Navbar"
 
+import BackButton
+  from "../components/BackButton"
+
 const SimulationPage = () => {
 
   const { projectId } =
@@ -44,7 +47,7 @@ const SimulationPage = () => {
             `/projects/${projectId}/simulate`,
             {
               availableHours:
-                Number(hours)
+                hours
             }
           )
 
@@ -58,7 +61,11 @@ const SimulationPage = () => {
 
         setLoading(false)
 
-        console.log(error)
+        alert(
+          error.response?.data
+            ?.message ||
+          "Simulation failed"
+        )
       }
     }
 
@@ -70,144 +77,321 @@ const SimulationPage = () => {
 
       <div className="container mt-4">
 
-        <h2 className="mb-4">
-          Daily Simulation
-        </h2>
+        <BackButton />
 
-        <div className="card p-4 mb-4">
+        {/* HEADER */}
 
-          <div className="d-flex gap-2">
+        <div className="text-center mb-5">
 
-            <input
-              type="number"
-              className="form-control"
-              value={hours}
-              onChange={e =>
-                setHours(
-                  e.target.value
-                )
-              }
-            />
+          <h1 className="fw-bold">
+            Daily Simulation
+          </h1>
 
-            <button
-              className="btn btn-primary"
-              onClick={
-                runSimulation
-              }
-            >
-              Simulate
-            </button>
+          <p className="text-muted">
+
+            Optimize workflow execution
+            based on available hours,
+            task priority, and
+            dependencies.
+
+          </p>
+
+        </div>
+
+        {/* INPUT */}
+
+        <div className="card p-4 shadow-sm mb-4">
+
+          <div className="row align-items-center">
+
+            <div className="col-md-10">
+
+              <input
+                type="number"
+                className="form-control form-control-lg"
+                value={hours}
+                onChange={e =>
+                  setHours(
+                    e.target.value
+                  )
+                }
+                placeholder="Available Hours"
+              />
+
+            </div>
+
+            <div className="col-md-2">
+
+              <button
+                className="btn btn-primary btn-lg w-100"
+                onClick={
+                  runSimulation
+                }
+              >
+
+                {
+                  loading
+                    ? "Running..."
+                    : "Simulate"
+                }
+
+              </button>
+
+            </div>
 
           </div>
 
         </div>
 
-        {
-          loading && (
-            <h5>
-              Loading...
-            </h5>
-          )
-        }
+        {/* RESULT */}
 
         {
           result && (
 
-            <div className="card p-4">
+            <div className="card p-4 shadow-sm">
 
-              <h4 className="mb-3">
-                Execution Order
-              </h4>
+              <h2 className="text-center mb-5">
 
-              <ol>
+                Execution Result
+
+              </h2>
+
+              {/* SUMMARY */}
+
+              <div className="row text-center mb-5">
+
+                <div className="col-md-4 mb-3">
+
+                  <div className="card p-4 shadow-sm border-0">
+
+                    <h5 className="text-muted">
+
+                      Total Priority
+
+                    </h5>
+
+                    <h1 className="fw-bold text-primary">
+
+                      {
+                        result.totalPriority
+                      }
+
+                    </h1>
+
+                  </div>
+
+                </div>
+
+                <div className="col-md-4 mb-3">
+
+                  <div className="card p-4 shadow-sm border-0">
+
+                    <h5 className="text-muted">
+
+                      Used Hours
+
+                    </h5>
+
+                    <h1 className="fw-bold text-success">
+
+                      {
+                        result.usedHours
+                      }
+
+                    </h1>
+
+                  </div>
+
+                </div>
+
+                <div className="col-md-4 mb-3">
+
+                  <div className="card p-4 shadow-sm border-0">
+
+                    <h5 className="text-muted">
+
+                      Remaining Hours
+
+                    </h5>
+
+                    <h1 className="fw-bold text-danger">
+
+                      {
+                        result.remainingHours
+                      }
+
+                    </h1>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+              {/* EXECUTION ORDER */}
+
+              <div className="mb-5">
+
+                <h3 className="mb-3">
+
+                  Execution Order
+
+                </h3>
 
                 {
-                  result.executionOrder.map(
-                    (
-                      task,
-                      index
-                    ) => (
+                  result.selectedTasks &&
+                  result.selectedTasks
+                    .length > 0
 
-                      <li
-                        key={index}
-                      >
-                        {task}
-                      </li>
+                    ? (
+
+                      <ul className="list-group">
+
+                        {
+                          result.selectedTasks.map(
+                            task => (
+
+                              <li
+                                key={task._id}
+                                className="list-group-item d-flex justify-content-between align-items-center"
+                              >
+
+                                <span>
+                                  {task.title}
+                                </span>
+
+                                <span className="badge bg-primary">
+
+                                  Priority:
+                                  {" "}
+                                  {
+                                    task.priority
+                                  }
+
+                                </span>
+
+                              </li>
+                            )
+                          )
+                        }
+
+                      </ul>
+
                     )
-                  )
-                }
 
-              </ol>
+                    : (
 
-              <hr />
+                      <div className="alert alert-info">
 
-              <h5>
-                Total Priority Score:
-                {" "}
-                {
-                  result.totalPriorityScore
-                }
-              </h5>
+                        No tasks selected
 
-              <h5>
-                Used Hours:
-                {" "}
-                {
-                  result.usedHours
-                }
-              </h5>
-
-              <h5>
-                Remaining Hours:
-                {" "}
-                {
-                  result.remainingHours
-                }
-              </h5>
-
-              <hr />
-
-              <h5>
-                Blocked Tasks:
-              </h5>
-
-              <ul>
-
-                {
-                  result.blockedTasks.map(
-                    task => (
-
-                      <li
-                        key={task._id}
-                      >
-                        {task.title}
-                      </li>
+                      </div>
                     )
-                  )
                 }
 
-              </ul>
+              </div>
 
-              <h5>
-                Skipped Tasks:
-              </h5>
+              {/* BLOCKED TASKS */}
 
-              <ul>
+              <div className="mb-5">
+
+                <h3 className="mb-3">
+
+                  Blocked Tasks
+
+                </h3>
 
                 {
-                  result.skippedTasks.map(
-                    task => (
+                  result.blockedTasks &&
+                  result.blockedTasks
+                    .length > 0
 
-                      <li
-                        key={task._id}
-                      >
-                        {task.title}
-                      </li>
+                    ? (
+
+                      <ul className="list-group">
+
+                        {
+                          result.blockedTasks.map(
+                            task => (
+
+                              <li
+                                key={task._id}
+                                className="list-group-item list-group-item-danger"
+                              >
+
+                                {task.title}
+
+                              </li>
+                            )
+                          )
+                        }
+
+                      </ul>
+
                     )
-                  )
+
+                    : (
+
+                      <div className="alert alert-success">
+
+                        No blocked tasks
+
+                      </div>
+                    )
                 }
 
-              </ul>
+              </div>
+
+              {/* SKIPPED TASKS */}
+
+              <div>
+
+                <h3 className="mb-3">
+
+                  Skipped Tasks
+
+                </h3>
+
+                {
+                  result.skippedTasks &&
+                  result.skippedTasks
+                    .length > 0
+
+                    ? (
+
+                      <ul className="list-group">
+
+                        {
+                          result.skippedTasks.map(
+                            task => (
+
+                              <li
+                                key={task._id}
+                                className="list-group-item list-group-item-warning"
+                              >
+
+                                {task.title}
+
+                              </li>
+                            )
+                          )
+                        }
+
+                      </ul>
+
+                    )
+
+                    : (
+
+                      <div className="alert alert-success">
+
+                        No skipped tasks
+
+                      </div>
+                    )
+                }
+
+              </div>
 
             </div>
           )
