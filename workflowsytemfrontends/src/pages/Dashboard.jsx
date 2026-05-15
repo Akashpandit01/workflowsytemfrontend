@@ -18,13 +18,17 @@ const Dashboard = () => {
     setProjects] =
       useState([])
 
-  const [name,
-    setName] =
-      useState("")
-
   const [loading,
     setLoading] =
       useState(false)
+
+  const [projectName,
+    setProjectName] =
+      useState("")
+
+  const [inviteLink,
+    setInviteLink] =
+      useState("")
 
   // =========================
   // FETCH PROJECTS
@@ -56,6 +60,10 @@ const Dashboard = () => {
       }
     }
 
+  // =========================
+  // LOAD PROJECTS
+  // =========================
+
   useEffect(() => {
 
     fetchProjects()
@@ -67,34 +75,34 @@ const Dashboard = () => {
   // =========================
 
   const createProject =
-    async () => {
+    async e => {
+
+      e.preventDefault()
 
       try {
 
-        if (!name) {
-
-          return alert(
-            "Project name required"
-          )
-        }
-
         await api.post(
           "/projects",
-          { name }
+          {
+            name:
+              projectName
+          }
         )
 
-        setName("")
+        setProjectName("")
 
         fetchProjects()
 
       } catch (error) {
 
-        console.log(error)
+        alert(
+          error.response.data.message
+        )
       }
     }
 
   // =========================
-  // GENERATE INVITE
+  // GENERATE INVITE LINK
   // =========================
 
   const generateInvite =
@@ -107,18 +115,32 @@ const Dashboard = () => {
             `/projects/${projectId}/invite`
           )
 
-        navigator.clipboard.writeText(
-          res.data.inviteLink
-        )
-
-        alert(
-          "Invite link copied"
+        setInviteLink(
+          `${window.location.origin}/join/${res.data.token}`
         )
 
       } catch (error) {
 
-        console.log(error)
+        alert(
+          error.response.data.message
+        )
       }
+    }
+
+  // =========================
+  // COPY LINK
+  // =========================
+
+  const copyInviteLink =
+    () => {
+
+      navigator.clipboard.writeText(
+        inviteLink
+      )
+
+      alert(
+        "Invite link copied"
+      )
     }
 
   return (
@@ -127,64 +149,130 @@ const Dashboard = () => {
 
       <Navbar />
 
-      <div className="container mt-4">
+      <div className="container mt-4 fade-in">
 
-        <div className="d-flex justify-content-between align-items-center mb-4">
+        {/* HEADER */}
 
-          <h2>
-            Dashboard
-          </h2>
+        <div className="d-flex justify-content-between align-items-center mb-5">
 
-        </div>
+          <div>
 
-        {/* Create Project */}
+            <h1 className="fw-bold">
 
-        <div className="card p-4 mb-4">
+              Workflow Dashboard
 
-          <h4 className="mb-3">
-            Create Project
-          </h4>
+            </h1>
 
-          <div className="d-flex gap-2">
+            <p className="text-muted">
 
-            <input
-              type="text"
-              placeholder="Project Name"
-              className="form-control"
-              value={name}
-              onChange={e =>
-                setName(
-                  e.target.value
-                )
-              }
-            />
+              Manage intelligent workflow orchestration projects.
 
-            <button
-              className="btn btn-primary"
-              onClick={
-                createProject
-              }
-            >
-              Create
-            </button>
+            </p>
 
           </div>
 
         </div>
 
-        {/* Loading */}
+        {/* CREATE PROJECT */}
+
+        <div className="card p-4 shadow-sm mb-5">
+
+          <h3 className="mb-4">
+
+            Create Project
+
+          </h3>
+
+          <form
+            onSubmit={
+              createProject
+            }
+          >
+
+            <div className="row">
+
+              <div className="col-md-10">
+
+                <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Enter project name"
+                  value={
+                    projectName
+                  }
+                  onChange={e =>
+                    setProjectName(
+                      e.target.value
+                    )
+                  }
+                  required
+                />
+
+              </div>
+
+              <div className="col-md-2">
+
+                <button className="btn btn-primary btn-lg w-100">
+
+                  Create
+
+                </button>
+
+              </div>
+
+            </div>
+
+          </form>
+
+        </div>
+
+        {/* INVITE LINK */}
 
         {
-          loading && (
-            <h5>
-              Loading...
-            </h5>
+          inviteLink && (
+
+            <div className="alert alert-success d-flex justify-content-between align-items-center mb-5">
+
+              <div className="text-break">
+
+                {inviteLink}
+
+              </div>
+
+              <button
+                className="btn btn-dark ms-3"
+                onClick={
+                  copyInviteLink
+                }
+              >
+
+                Copy
+
+              </button>
+
+            </div>
           )
         }
 
-        {/* Empty */}
+        {/* LOADING */}
 
         {
+          loading && (
+
+            <div className="text-center">
+
+              <h4>
+                Loading...
+              </h4>
+
+            </div>
+          )
+        }
+
+        {/* EMPTY */}
+
+        {
+          !loading &&
           projects.length === 0 && (
 
             <div className="alert alert-info">
@@ -195,57 +283,79 @@ const Dashboard = () => {
           )
         }
 
-        {/* Projects */}
+        {/* PROJECTS */}
 
         <div className="row">
 
           {
-            projects.map(project => (
+            projects.map(
+              project => (
 
-              <div
-                className="col-md-4"
-                key={project._id}
-              >
+                <div
+                  className="col-md-4"
+                  key={project._id}
+                >
 
-                <div className="card p-4 mb-4 shadow-sm">
+                  <div className="card p-4 shadow-sm mb-4 project-card">
 
-                  <h4>
-                    {project.name}
-                  </h4>
+                    <h3 className="mb-3">
 
-                  <div className="d-flex flex-wrap gap-2 mt-3">
+                      {project.name}
 
-                    <Link
-                      to={`/project/${project._id}`}
-                      className="btn btn-dark"
-                    >
-                      Open
-                    </Link>
+                    </h3>
 
-                    <Link
-                      to={`/simulation/${project._id}`}
-                      className="btn btn-primary"
-                    >
-                      Simulation
-                    </Link>
+                    <p className="text-muted">
 
-                    <button
-                      className="btn btn-success"
-                      onClick={() =>
-                        generateInvite(
-                          project._id
-                        )
-                      }
-                    >
-                      Invite
-                    </button>
+                      Collaborative workflow orchestration project.
+
+                    </p>
+
+                    <div className="d-flex flex-wrap gap-2 mt-3">
+
+                      {/* OPEN */}
+
+                      <Link
+                        to={`/project/${project._id}`}
+                        className="btn btn-primary"
+                      >
+
+                        Open
+
+                      </Link>
+
+                      {/* SIMULATION */}
+
+                      <Link
+                        to={`/simulation/${project._id}`}
+                        className="btn btn-dark"
+                      >
+
+                        Simulation
+
+                      </Link>
+
+                      {/* INVITE */}
+
+                      <button
+                        className="btn btn-success"
+                        onClick={() =>
+                          generateInvite(
+                            project._id
+                          )
+                        }
+                      >
+
+                        Invite
+
+                      </button>
+
+                    </div>
 
                   </div>
 
                 </div>
-
-              </div>
-            ))
+              )
+            )
           }
 
         </div>
