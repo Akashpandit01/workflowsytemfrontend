@@ -335,7 +335,7 @@ const ProjectPage = () => {
 
       <Navbar />
 
-      <div className="container mt-4 fade-in">
+      <div className="container mt-4">
 
         <BackButton />
 
@@ -465,7 +465,7 @@ const ProjectPage = () => {
 
             {/* DEPENDENCIES */}
 
-            <label className="mb-2 fw-bold">
+            <label className="fw-bold mb-2">
 
               Select Dependencies
 
@@ -616,6 +616,8 @@ const ProjectPage = () => {
 
                   </p>
 
+                  {/* DEPENDENCY DISPLAY */}
+
                   <p>
 
                     <strong>
@@ -629,7 +631,8 @@ const ProjectPage = () => {
                       task.dependencies.length > 0
 
                         ? task.dependencies.map(
-                            dep => dep.title
+                            dep =>
+                              dep.title
                           ).join(", ")
 
                         : "None"
@@ -823,7 +826,7 @@ const ProjectPage = () => {
 
                   {/* EDIT DEPENDENCIES */}
 
-                  <label className="mb-2 fw-bold">
+                  <label className="fw-bold mb-2">
 
                     Edit Dependencies
 
