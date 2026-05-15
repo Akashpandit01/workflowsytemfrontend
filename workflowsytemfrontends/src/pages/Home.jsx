@@ -1,3 +1,5 @@
+import "../styles/Home.css"
+
 import {
   Link
 } from "react-router-dom"
@@ -6,31 +8,31 @@ const Home = () => {
 
   return (
 
-    <div>
+    <div className="home-container">
 
       {/* Navbar */}
 
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+      <nav className="navbar navbar-expand-lg navbar-dark premium-navbar px-4 py-3">
 
         <Link
-          className="navbar-brand fw-bold"
+          className="navbar-brand fw-bold fs-3 logo-text"
           to="/"
         >
           WorkflowX
         </Link>
 
-        <div className="ms-auto d-flex gap-2">
+        <div className="ms-auto d-flex gap-3">
 
           <Link
             to="/login"
-            className="btn btn-outline-light"
+            className="btn btn-outline-light px-4 rounded-pill"
           >
             Login
           </Link>
 
           <Link
             to="/signup"
-            className="btn btn-primary"
+            className="btn premium-btn px-4 rounded-pill shadow"
           >
             Signup
           </Link>
@@ -43,18 +45,24 @@ const Home = () => {
 
       <section className="container py-5">
 
-        <div className="row align-items-center">
+        <div className="row align-items-center min-vh-100">
 
           <div className="col-md-6">
 
-            <h1 className="display-4 fw-bold mb-4">
+            <span className="badge hero-badge px-4 py-2 mb-4">
+
+              Smart Team Collaboration Platform
+
+            </span>
+
+            <h1 className="hero-title fw-bold mb-4">
 
               Collaborative Workflow
               Orchestration System
 
             </h1>
 
-            <p className="lead text-muted mb-4">
+            <p className="hero-text lead mb-4">
 
               Manage projects, tasks,
               dependencies, realtime updates,
@@ -64,18 +72,18 @@ const Home = () => {
 
             </p>
 
-            <div className="d-flex gap-3">
+            <div className="d-flex gap-3 flex-wrap">
 
               <Link
                 to="/signup"
-                className="btn btn-primary btn-lg"
+                className="btn premium-btn btn-lg px-5 py-3 rounded-pill shadow"
               >
                 Get Started
               </Link>
 
               <Link
                 to="/login"
-                className="btn btn-outline-dark btn-lg"
+                className="btn btn-outline-dark btn-lg px-5 py-3 rounded-pill"
               >
                 Login
               </Link>
@@ -84,15 +92,14 @@ const Home = () => {
 
           </div>
 
-          <div className="col-md-6 text-center">
+          <div className="col-md-6 text-center position-relative">
+
+            <div className="hero-glow"></div>
 
             <img
               src="https://cdn-icons-png.flaticon.com/512/4149/4149653.png"
               alt="workflow"
-              className="img-fluid"
-              style={{
-                maxHeight: "400px"
-              }}
+              className="img-fluid workflow-image"
             />
 
           </div>
@@ -103,26 +110,42 @@ const Home = () => {
 
       {/* Features */}
 
-      <section className="bg-light py-5">
+      <section className="py-5">
 
         <div className="container">
 
           <div className="text-center mb-5">
 
-            <h2 className="fw-bold">
-              Features
+            <h2 className="features-title fw-bold">
+
+              Powerful Features
+
             </h2>
+
+            <p className="features-subtitle">
+
+              Everything your team needs
+              to manage workflows efficiently
+              and collaborate seamlessly.
+
+            </p>
 
           </div>
 
-          <div className="row">
+          <div className="row g-4">
 
             <div className="col-md-4">
 
-              <div className="card p-4 h-100 shadow-sm">
+              <div className="feature-card">
 
-                <h4>
+                <div className="feature-icon icon-purple">
+                  ⚡
+                </div>
+
+                <h4 className="fw-bold">
+
                   Realtime Collaboration
+
                 </h4>
 
                 <p className="text-muted">
@@ -139,10 +162,16 @@ const Home = () => {
 
             <div className="col-md-4">
 
-              <div className="card p-4 h-100 shadow-sm">
+              <div className="feature-card">
 
-                <h4>
+                <div className="feature-icon icon-blue">
+                  🔗
+                </div>
+
+                <h4 className="fw-bold">
+
                   Dependency Engine
+
                 </h4>
 
                 <p className="text-muted">
@@ -159,10 +188,16 @@ const Home = () => {
 
             <div className="col-md-4">
 
-              <div className="card p-4 h-100 shadow-sm">
+              <div className="feature-card">
 
-                <h4>
+                <div className="feature-icon icon-green">
+                  🛡️
+                </div>
+
+                <h4 className="fw-bold">
+
                   Conflict Safe Updates
+
                 </h4>
 
                 <p className="text-muted">
@@ -185,7 +220,7 @@ const Home = () => {
 
       {/* Footer */}
 
-      <footer className="bg-dark text-light text-center py-3">
+      <footer className="premium-footer text-light text-center py-4 mt-5">
 
         <p className="mb-0">
 
