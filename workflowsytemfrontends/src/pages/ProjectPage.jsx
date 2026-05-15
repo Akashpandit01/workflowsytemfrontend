@@ -13,7 +13,9 @@ import socket from "../socket/socket"
 
 import Navbar
   from "../components/Navbar"
-import BackButton from "../components/BackButton"
+
+import BackButton
+  from "../components/BackButton"
 
 const ProjectPage = () => {
 
@@ -332,9 +334,10 @@ const ProjectPage = () => {
     <>
 
       <Navbar />
-      {/* <BackButton /> */}
 
-      <div className="container mt-4">
+      <div className="container mt-4 fade-in">
+
+        <BackButton />
 
         <div className="d-flex justify-content-between align-items-center mb-4">
 
@@ -353,14 +356,14 @@ const ProjectPage = () => {
 
         </div>
 
-        {/* Execution Plan */}
+        {/* EXECUTION PLAN */}
 
         {
           executionPlan.length > 0 && (
 
             <div className="card p-4 mb-4">
 
-              <h4>
+              <h4 className="mb-3">
                 Execution Plan
               </h4>
 
@@ -385,11 +388,11 @@ const ProjectPage = () => {
           )
         }
 
-        {/* Create Task */}
+        {/* CREATE TASK */}
 
         <div className="card p-4 mb-4">
 
-          <h4 className="mb-3">
+          <h4 className="mb-4 text-center">
             Create Task
           </h4>
 
@@ -460,45 +463,50 @@ const ProjectPage = () => {
               }
             />
 
-           {/* Dependencies */}
+            {/* DEPENDENCIES */}
 
-<label className="mb-2 fw-bold">
-  Select Dependencies
-</label>
+            <label className="mb-2 fw-bold">
 
-<select
-  multiple
-  className="form-control mb-3"
-  value={taskData.dependencies}
-  onChange={e => {
+              Select Dependencies
 
-    const selectedDependencies =
-      Array.from(
-        e.target.selectedOptions,
-        option => option.value
-      )
+            </label>
 
-    setTaskData({
-      ...taskData,
-      dependencies:
-        selectedDependencies
-    })
-  }}
->
+            <select
+              multiple
+              className="form-control mb-4"
+              value={
+                taskData.dependencies
+              }
+              onChange={e => {
 
-  {
-    tasks.map(task => (
+                const selectedDependencies =
+                  Array.from(
+                    e.target.selectedOptions,
+                    option =>
+                      option.value
+                  )
 
-      <option
-        key={task._id}
-        value={task._id}
-      >
-        {task.title}
-      </option>
-    ))
-  }
+                setTaskData({
+                  ...taskData,
+                  dependencies:
+                    selectedDependencies
+                })
+              }}
+            >
 
-</select>
+              {
+                tasks.map(task => (
+
+                  <option
+                    key={task._id}
+                    value={task._id}
+                  >
+                    {task.title}
+                  </option>
+                ))
+              }
+
+            </select>
 
             <button className="btn btn-primary">
 
@@ -510,7 +518,7 @@ const ProjectPage = () => {
 
         </div>
 
-        {/* Loading */}
+        {/* LOADING */}
 
         {
           loading && (
@@ -520,7 +528,7 @@ const ProjectPage = () => {
           )
         }
 
-        {/* Empty State */}
+        {/* EMPTY */}
 
         {
           tasks.length === 0 && (
@@ -533,7 +541,7 @@ const ProjectPage = () => {
           )
         }
 
-        {/* Task List */}
+        {/* TASKS */}
 
         <div className="row">
 
@@ -545,53 +553,91 @@ const ProjectPage = () => {
                 key={task._id}
               >
 
-                <div className="card p-3 mb-3 shadow-sm">
+                <div className="card p-4 mb-4 shadow-sm">
 
-                  <h5>
+                  <h4 className="mb-3">
                     {task.title}
-                  </h5>
+                  </h4>
 
                   <p>
                     {task.description}
                   </p>
 
                   <p>
+
                     <strong>
                       Priority:
                     </strong>
+
                     {" "}
+
                     {task.priority}
+
                   </p>
 
                   <p>
+
                     <strong>
                       Status:
                     </strong>
+
                     {" "}
+
                     {task.status}
+
                   </p>
 
                   <p>
+
                     <strong>
                       Hours:
                     </strong>
+
                     {" "}
+
                     {
                       task.estimatedHours
                     }
+
                   </p>
 
                   <p>
+
                     <strong>
                       Resource:
                     </strong>
+
                     {" "}
+
                     {
-                      task.resourceTag
+                      task.resourceTag ||
+                      "None"
                     }
+
                   </p>
 
-                  <div className="d-flex flex-wrap gap-2">
+                  <p>
+
+                    <strong>
+                      Dependencies:
+                    </strong>
+
+                    {" "}
+
+                    {
+                      task.dependencies &&
+                      task.dependencies.length > 0
+
+                        ? task.dependencies.map(
+                            dep => dep.title
+                          ).join(", ")
+
+                        : "None"
+                    }
+
+                  </p>
+
+                  <div className="d-flex flex-wrap gap-2 mt-3">
 
                     <button
                       className="btn btn-success btn-sm"
@@ -675,14 +721,14 @@ const ProjectPage = () => {
 
         </div>
 
-        {/* History */}
+        {/* HISTORY */}
 
         {
           history.length > 0 && (
 
             <div className="card p-4 mt-4">
 
-              <h4>
+              <h4 className="mb-3">
                 Task History
               </h4>
 
@@ -695,17 +741,21 @@ const ProjectPage = () => {
 
                     <div
                       key={index}
-                      className="border-bottom mb-3"
+                      className="border-bottom mb-3 pb-2"
                     >
 
                       <p>
+
                         <strong>
                           Version:
                         </strong>
+
                         {" "}
+
                         {
                           item.versionNumber
                         }
+
                       </p>
 
                       <p>
@@ -721,7 +771,7 @@ const ProjectPage = () => {
           )
         }
 
-        {/* Edit Modal */}
+        {/* EDIT MODAL */}
 
         {
           editingTask && (
@@ -738,7 +788,7 @@ const ProjectPage = () => {
 
                 <div className="modal-content p-4">
 
-                  <h4>
+                  <h4 className="mb-3">
                     Edit Task
                   </h4>
 
@@ -770,6 +820,60 @@ const ProjectPage = () => {
                       })
                     }
                   />
+
+                  {/* EDIT DEPENDENCIES */}
+
+                  <label className="mb-2 fw-bold">
+
+                    Edit Dependencies
+
+                  </label>
+
+                  <select
+                    multiple
+                    className="form-control mb-3"
+                    value={
+                      editingTask.dependencies?.map(
+                        dep =>
+                          dep._id || dep
+                      ) || []
+                    }
+                    onChange={e => {
+
+                      const selectedDependencies =
+                        Array.from(
+                          e.target.selectedOptions,
+                          option =>
+                            option.value
+                        )
+
+                      setEditingTask({
+                        ...editingTask,
+                        dependencies:
+                          selectedDependencies
+                      })
+                    }}
+                  >
+
+                    {
+                      tasks
+                        .filter(
+                          task =>
+                            task._id !==
+                            editingTask._id
+                        )
+                        .map(task => (
+
+                          <option
+                            key={task._id}
+                            value={task._id}
+                          >
+                            {task.title}
+                          </option>
+                        ))
+                    }
+
+                  </select>
 
                   <button
                     className="btn btn-primary"
