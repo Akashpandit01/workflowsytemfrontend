@@ -460,41 +460,45 @@ const ProjectPage = () => {
               }
             />
 
-            {/* Dependencies */}
+           {/* Dependencies */}
 
-            <select
-              multiple
-              className="form-control mb-3"
-              onChange={e => {
+<label className="mb-2 fw-bold">
+  Select Dependencies
+</label>
 
-                const values =
-                  Array.from(
-                    e.target.selectedOptions,
-                    option =>
-                      option.value
-                  )
+<select
+  multiple
+  className="form-control mb-3"
+  value={taskData.dependencies}
+  onChange={e => {
 
-                setTaskData({
-                  ...taskData,
-                  dependencies:
-                    values
-                })
-              }}
-            >
+    const selectedDependencies =
+      Array.from(
+        e.target.selectedOptions,
+        option => option.value
+      )
 
-              {
-                tasks.map(task => (
+    setTaskData({
+      ...taskData,
+      dependencies:
+        selectedDependencies
+    })
+  }}
+>
 
-                  <option
-                    key={task._id}
-                    value={task._id}
-                  >
-                    {task.title}
-                  </option>
-                ))
-              }
+  {
+    tasks.map(task => (
 
-            </select>
+      <option
+        key={task._id}
+        value={task._id}
+      >
+        {task.title}
+      </option>
+    ))
+  }
+
+</select>
 
             <button className="btn btn-primary">
 
