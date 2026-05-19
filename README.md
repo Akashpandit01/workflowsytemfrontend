@@ -192,7 +192,7 @@ Workflow simulation dashboard.
 ## Clone Repository
 
 ```bash id="ngtl5v"
-git clone YOUR_GITHUB_LINK
+git clone  https://github.com/Akashpandit01/workflowsytemfrontend.git
 ```
 
 ---
