@@ -277,12 +277,31 @@ UI Instantly Updates
 
 ## Frontend Deployment
 
-Deployed on Vercel.
+Deployed on Vercel:
 
-## Backend API
+🔗 https://workflowsytemfrontend.vercel.app/
 
-Connected with Render backend.
+---
 
+## Backend Deployment
+
+Backend API deployed on Render:
+
+🔗 https://workflowsytembackend.onrender.com
+
+---
+
+# Repositories
+
+## Frontend Repository
+
+🔗 https://github.com/Akashpandit01/workflowsytemfrontend/tree/main/workflowsytemfrontends
+
+---
+
+## Backend Repository
+
+🔗 https://github.com/Akashpandit01/workflowsytembackend
 ---
 
 # Future Improvements
